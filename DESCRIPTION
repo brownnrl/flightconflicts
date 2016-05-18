@@ -7,7 +7,7 @@ Description: This package contains tools to analyze aircraft trajectories and
     identify loss of well-clear (LoWC) and near mid-air collisions (NMAC).
 Depends: 
     R (>= 3.2.3)
-License: What license is it under?
+License: MIT
 LazyData: true
 RoxygenNote: 5.0.1
 Suggests: flightpathr,
