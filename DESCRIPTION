@@ -1,8 +1,12 @@
 Package: flightconflicts
-Title: What the Package Does (one line, title case)
+Title: Analyze Conflicts Between Aircraft
 Version: 0.0.0.9000
-Authors@R: person("First", "Last", email = "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
-Depends: R (>= 3.2.3)
+Authors@R: person("Eamon", "Caddigan", email = "eamon.caddigan@tgobrien.com", 
+                  role = c("aut", "cre"))
+Description: This package contains tools to analyze aircraft trajectories and
+    identify loss of well-clear (LoWC) and near mid-air collisions (NMAC).
+Depends:
+    R (>= 3.2.3)
 License: What license is it under?
 LazyData: true
+RoxygenNote: 5.0.1
