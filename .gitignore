@@ -15,6 +15,9 @@
 vignettes/*.html
 vignettes/*.pdf
 
+# Let the people use their own RStudio options
+flightconflicts.Rproj
+
 # OAuth2 token, see https://github.com/hadley/httr/releases/tag/v0.3
 .httr-oauth
 .Rproj.user
