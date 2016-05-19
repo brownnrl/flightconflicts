@@ -67,15 +67,11 @@ createTrajectory <- function(longitude, latitude, altitude = 0, timestamp = NULL
   # Use geosphere to find the distance between points and use the timestamps to
   # calculate groundspeed if not specified.
   if (is.null(groundspeed)) {
-    if (requireNamespace("geosphere", quietly = TRUE)) {
-      distNM <- geosphere::distCosine(coords[1:(nCoord-1), ],
-                                      coords[2:nCoord, ],
-                                      r = 3444)
-      groundspeed <- distNM / timestamp[1:(nCoord-1)] * 3600
-      groundspeed <- c(groundspeed, groundspeed[nCoord-1])
-    } else {
-      stop("Package \"geosphere\" must be installed or groundspeed must be specified")
-    }
+    distNM <- geosphere::distCosine(coords[1:(nCoord-1), ],
+                                    coords[2:nCoord, ],
+                                    r = 3444)
+    groundspeed <- distNM / timestamp[1:(nCoord-1)] * 3600
+    groundspeed <- c(groundspeed, groundspeed[nCoord-1])
   } else{
     checkLength(groundspeed)
   }
