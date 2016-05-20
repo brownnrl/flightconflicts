@@ -17,7 +17,7 @@ identifyNMAC <- function(trajectory1, trajectory2) {
     stop("Both arguments must be instances of flighttrajectory")
   }
   if (!isTRUE(all.equal(trajectory1$timestamp, trajectory2$timestamp))) {
-    stop("Both trajectories must have the same time stamps")
+    stop("Trajectories must have matching time stamps")
   }
 
   horizontalDistanceFt <- geosphere::distHaversine(cbind(trajectory1$longitude,
