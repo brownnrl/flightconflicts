@@ -72,7 +72,7 @@ createTrajectory <- function(longitude, latitude, altitude = 0, timestamp = NULL
     distNM <- geosphere::distCosine(coords[1:(nCoord-1), ],
                                     coords[2:nCoord, ],
                                     r = 3444)
-    groundspeed <- distNM / timestamp[1:(nCoord-1)] * 3600
+    groundspeed <- distNM / diff(timestamp) * 3600
     groundspeed <- c(groundspeed, groundspeed[nCoord-1])
   } else{
     checkLength(groundspeed)
