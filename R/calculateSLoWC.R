@@ -35,8 +35,8 @@ calculateSLoWC <- function(trajectory1, trajectory2) {
                              lon0, lat0),
                   trajectory2$altitude)
   
-  ac1Velocity <- bearingToXY(trajectory1$bearing, trajectory1$velocity)
-  ac2Velocity <- bearingToXY(trajectory2$bearing, trajectory2$velocity)
+  ac1Velocity <- bearingToXY(trajectory1$bearing, trajectory1$groundspeed)
+  ac2Velocity <- bearingToXY(trajectory2$bearing, trajectory2$groundspeed)
   
   dXYZ <- ac2XYZ - ac1XYZ
   dXYZ[, 3] <- abs(dXYZ[, 3])
