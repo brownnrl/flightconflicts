@@ -1,4 +1,4 @@
-#' Calculate the "severity loss of well-clear" (SLoWC) metric, described in RTCA
+#' Calculate the "severity loss of Well Clear" (SLoWC) metric, described in RTCA
 #' SC-228 Closed-Loop Metrics White Paper.
 #' 
 #' @param trajectory1 A \code{flighttrajectory} object corresponding to the
@@ -6,10 +6,10 @@
 #' @param trajectory2 A \code{flighttrajectory} object corresponding to the
 #'   second aircraft.
 #' @return The numeric vector giving the SLoWC metric. Values lie in the range 
-#'   [0, 100]. A SLoWC of 0 indicates well-clear, while a value of 100 
+#'   [0, 100]. A SLoWC of 0 indicates Well Clear, while a value of 100 
 #'   corresponds to "full penetration" (i.e., a collision).
 #'   
-#' @details Note that the RTCA definition of well-clear is undergoing revision. 
+#' @details Note that the RTCA definition of Well Clear is undergoing revision. 
 #'   This code is based on the SLoWC formulation by Ethan Pratt and Jacob Kay as
 #'   implemented in a MATLAB script by Ethan Pratt dated 2016-04-18.
 #'   
