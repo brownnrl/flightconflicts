@@ -31,3 +31,22 @@ identifyNMAC <- function(trajectory1, trajectory2) {
 
   return(isNMAC)
 }
+
+
+
+#' Determine whether loss of Well Clear (LoWC) has occurred at each time point.
+#' 
+#' @param trajectory1 A \code{flighttrajectory} object corresponding to the 
+#'   first aircraft.
+#' @param trajectory2 A \code{flighttrajectory} object corresponding to the 
+#'   second aircraft.
+#' @return The logical vector indicating whether Well Clear has been violated at
+#'   each time point.
+#'   
+#' @details This code relies on \code{\link{calculateSLoWC}}, see its
+#'   documentation for details.
+#'   
+#' @export
+identifyLoWC <- function(trajectory1, trajectory2) {
+  return(calculateSLoWC(trajectory1, trajectory2) > 0)
+}
