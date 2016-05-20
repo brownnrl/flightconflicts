@@ -10,19 +10,23 @@
 lonlatToXY <- function(longitude, latitude, originLongitude, originLatitude) {
   # This implementation is based on code from:
   # http://williams.best.vwh.net/avform.htm#flat
-  dlon <- longitude - originLongitude
-  dlat <- latitude - originLatitude
+  lon0 <- originLongitude * pi / 180.0
+  lat0 <- originLatitude * pi / 180.0
+  
+  dlon <- longitude * pi / 180.0 - lon0
+  dlat <- latitude * pi / 180.0 - lat0
   
   # Radius in feet and flattening based on WGS84
   a <- 20925646
+  #a <- 6378137
   f <- 1/298.257223563
   e2 <- f*(2-f)
   
-  R1 <- a*(1-e2)/(1-e2*(sin(originLatitude))^2)^(3/2)
-  R2 <- a/sqrt(1-e2*(sin(originLatitude))^2)
+  R1 <- a*(1-e2)/(1-e2*(sin(lat0))^2)^(3/2)
+  R2 <- a/sqrt(1-e2*(sin(lat0))^2)
   
-  xDistance <- R2 * cos(originLatitude) * dlon
-  yDistance <- R1 * dlat
+  xyFeet <- cbind(R2 * cos(lat0) * dlon, 
+                  R1 * dlat)
   
-  return(cbind(xDistance, yDistance))
+  return(xyFeet)
 }
