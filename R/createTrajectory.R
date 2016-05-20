@@ -1,4 +1,4 @@
-#' Create a flighttrajectory object from the flight info. 
+#' Create a flighttrajectory object from the flight info.
 #' 
 #' @param longitude Required; numeric vector giving aircraft longitude in 
 #'   degrees.
@@ -13,10 +13,12 @@
 #' @param groundspeed Optional; numeric vector giving the current ground speed 
 #'   of the aircraft in knots. If missing, it is estimated using pairs of 
 #'   successive lon/lat observations.
+#' @return A flighttrajectory object encapsulating these parameters (with
+#'   default values substituded as necessary).
 #'   
 #' @details \code{longitude} and \code{latitude} must be the same length. 
-#'   \code{timestamp}, \code{bearing}, and \code{groundspeed}, if present, must
-#'   also match this length. \code{altitude} must also have a length equal to
+#'   \code{timestamp}, \code{bearing}, and \code{groundspeed}, if present, must 
+#'   also match this length. \code{altitude} must also have a length equal to 
 #'   these parameters or be scalar.
 #'   
 #' @export

@@ -27,13 +27,17 @@ observations.}
 of the aircraft in knots. If missing, it is estimated using pairs of 
 successive lon/lat observations.}
 }
+\value{
+A flighttrajectory object encapsulating these parameters (with
+  default values substituded as necessary).
+}
 \description{
 Create a flighttrajectory object from the flight info.
 }
 \details{
 \code{longitude} and \code{latitude} must be the same length. 
-  \code{timestamp}, \code{bearing}, and \code{groundspeed}, if present, must
-  also match this length. \code{altitude} must also have a length equal to
+  \code{timestamp}, \code{bearing}, and \code{groundspeed}, if present, must 
+  also match this length. \code{altitude} must also have a length equal to 
   these parameters or be scalar.
 }
 
