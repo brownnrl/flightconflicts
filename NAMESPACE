@@ -2,5 +2,6 @@
 
 export(calculateSLoWC)
 export(createTrajectory)
+export(identifyLoWC)
 export(identifyNMAC)
 export(is.flighttrajectory)
