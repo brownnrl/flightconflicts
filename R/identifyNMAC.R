@@ -1,16 +1,16 @@
-#' Determine whether an NMAC (near mid air collision) has occurred at each time
+#' Determine whether an NMAC (near mid air collision) has occurred at each time 
 #' point.
-#'
-#' @param trajectory1 A matrix or SpatialPoints object indicating the trajectory
-#'   of the first aircraft.
-#' @param trajectory2 A matrix or SpatialPoints object indicating the trajectory
-#'   of the second aircraft.
-#' @return The logical vector indicating whether NMAC criteria are met at each
+#' 
+#' @param trajectory1 A flighttrajectory object corresponding to the first 
+#'   aircraft.
+#' @param trajectory2 A flighttrajectory object corresponding to the second
+#'   aircraft.
+#' @return The logical vector indicating whether NMAC criteria are met at each 
 #'   time point.
-#'
-#' @details NMAC is a cylinder +/- 100 ft above and below the ownship with a
+#'   
+#' @details NMAC is a cylinder +/- 100 ft above and below the ownship with a 
 #'   radius of 500 ft.
-#'
+#'   
 #' @export
 identifyNMAC <- function(trajectory1, trajectory2) {
   if (!is.flighttrajectory(trajectory1) || !is.flighttrajectory(trajectory2)) {

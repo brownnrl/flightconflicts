@@ -2,28 +2,28 @@
 % Please edit documentation in R/identifyNMAC.R
 \name{identifyNMAC}
 \alias{identifyNMAC}
-\title{Determine whether an NMAC (near mid air collision) has occurred at each time
+\title{Determine whether an NMAC (near mid air collision) has occurred at each time 
 point.}
 \usage{
 identifyNMAC(trajectory1, trajectory2)
 }
 \arguments{
-\item{trajectory1}{A matrix or SpatialPoints object indicating the trajectory
-of the first aircraft.}
+\item{trajectory1}{A flighttrajectory object corresponding to the first 
+aircraft.}
 
-\item{trajectory2}{A matrix or SpatialPoints object indicating the trajectory
-of the second aircraft.}
+\item{trajectory2}{A flighttrajectory object corresponding to the second
+aircraft.}
 }
 \value{
-The logical vector indicating whether NMAC criteria are met at each
+The logical vector indicating whether NMAC criteria are met at each 
   time point.
 }
 \description{
-Determine whether an NMAC (near mid air collision) has occurred at each time
+Determine whether an NMAC (near mid air collision) has occurred at each time 
 point.
 }
 \details{
-NMAC is a cylinder +/- 100 ft above and below the ownship with a
+NMAC is a cylinder +/- 100 ft above and below the ownship with a 
   radius of 500 ft.
 }
 
