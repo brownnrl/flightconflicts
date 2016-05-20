@@ -1,10 +1,10 @@
 #' Determine whether an NMAC (near mid air collision) has occurred at each time 
 #' point.
 #' 
-#' @param trajectory1 A flighttrajectory object corresponding to the first 
-#'   aircraft.
-#' @param trajectory2 A flighttrajectory object corresponding to the second
-#'   aircraft.
+#' @param trajectory1 A \code{flighttrajectory} object corresponding to the
+#'   first aircraft.
+#' @param trajectory2 A \code{flighttrajectory} object corresponding to the
+#'   second aircraft.
 #' @return The logical vector indicating whether NMAC criteria are met at each 
 #'   time point.
 #'   

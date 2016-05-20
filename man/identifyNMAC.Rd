@@ -8,11 +8,11 @@ point.}
 identifyNMAC(trajectory1, trajectory2)
 }
 \arguments{
-\item{trajectory1}{A flighttrajectory object corresponding to the first 
-aircraft.}
+\item{trajectory1}{A \code{flighttrajectory} object corresponding to the
+first aircraft.}
 
-\item{trajectory2}{A flighttrajectory object corresponding to the second
-aircraft.}
+\item{trajectory2}{A \code{flighttrajectory} object corresponding to the
+second aircraft.}
 }
 \value{
 The logical vector indicating whether NMAC criteria are met at each 
