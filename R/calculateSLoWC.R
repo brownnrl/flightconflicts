@@ -85,8 +85,8 @@ calculateSLoWC <- function(trajectory1, trajectory2) {
   return(vSLoWC)
 }
 
-#' Convert a bearing (in degrees) and velocity (in knots) to north and east
-#' velocity (in ft / s).
+# Convert a bearing (in degrees) and velocity (in knots) to north and east 
+# velocity (in ft / s).
 bearingToXY <- function(bearing, velocity) {
   # Velocity should be in knots. Convert to ft / s
   fps <- velocity * 1.68781
@@ -97,7 +97,7 @@ bearingToXY <- function(bearing, velocity) {
                fps * cos(theta)))
 }
 
-#' The Fernandez-Gausti squircular operator.
+# The Fernandez-Gausti squircular operator.
 FGnorm <- function(x, y) {
   return(sqrt(x^2 + (1 - x^2) * y^2))
 }
