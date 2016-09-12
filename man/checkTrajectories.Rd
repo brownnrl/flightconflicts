@@ -17,4 +17,10 @@ TRUE if everything works. Raises an error otherwise.
 \description{
 Check that both arguments are trajectories with the same timecourse.
 }
+\details{
+There are two options for passing this test. Either both objects can
+  be flighttrajectories, in which case the time stamps must match, or they
+  can both be flattrajectories, in which case they must have the same number
+  of samples and origin.
+}
 

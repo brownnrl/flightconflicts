@@ -24,3 +24,7 @@ trajectoryToXYZ <- function(trajectory, origin) {
   
   return(flattrajectory)
 }
+
+#' Check if an object is a flighttrajectory
+#' @export
+is.flattrajectory <- function(x) inherits(x, "flattrajectory")

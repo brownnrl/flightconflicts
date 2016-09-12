@@ -15,27 +15,18 @@
 calculateTCPA <- function(trajectory1, trajectory2) {
   checkTrajectories(trajectory1, trajectory2)
   
-  # Find the "origin" lon/lat for the encounter. Distances will be represented
-  # in feet north/east from this point. Use the centroid of the trajectories.
-  lon0 <- mean(c(trajectory1$longitude, trajectory2$longitude))
-  lat0 <- mean(c(trajectory1$latitude, trajectory2$latitude))
-  
-  # Flat Earth approximation of aircraft position and velocity
-  ac1XYZ <- cbind(lonlatToXY(trajectory1$longitude, trajectory1$latitude, 
-                             lon0, lat0),
-                  trajectory1$altitude)
-  ac2XYZ <- cbind(lonlatToXY(trajectory2$longitude, trajectory2$latitude, 
-                             lon0, lat0),
-                  trajectory2$altitude)
-  
-  # Convert bearing/speed to velocity vector.
-  ac1Velocity <- bearingToXY(trajectory1$bearing, trajectory1$groundspeed)
-  ac2Velocity <- bearingToXY(trajectory2$bearing, trajectory2$groundspeed)
+  if (!is.flattrajectory(trajectory1)) {
+    lon0 <- mean(c(trajectory1$longitude, trajectory2$longitude))
+    lat0 <- mean(c(trajectory1$latitude, trajectory2$latitude))
+    
+    trajectory1 <- trajectoryToXYZ(trajectory1, c(lon0, lat0))
+    trajectory2 <- trajectoryToXYZ(trajectory2, c(lon0, lat0))
+  }
   
   # Distance between aircraft
-  dXYZ <- ac2XYZ - ac1XYZ
+  dXYZ <- trajectory2$position - trajectory1$position
   dXYZ[, 3] <- abs(dXYZ[, 3])
-  relativeVelocity <- ac2Velocity - ac1Velocity
+  relativeVelocity <- trajectory2$velocity - trajectory1$velocity
   
   # Calculate time to CPA and projected HMD
   tCPADividend <- -apply(dXYZ[, 1:2, drop = FALSE] * relativeVelocity, 1, sum)

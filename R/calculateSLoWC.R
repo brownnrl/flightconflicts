@@ -17,67 +17,52 @@
 calculateSLoWC <- function(trajectory1, trajectory2) {
   checkTrajectories(trajectory1, trajectory2)
   
-  # Find the "origin" lon/lat for the encounter. Distances will be represented
-  # in feet north/east from this point. Use the centroid of the trajectories.
-  lon0 <- mean(c(trajectory1$longitude, trajectory2$longitude))
-  lat0 <- mean(c(trajectory1$latitude, trajectory2$latitude))
-  
-  t1 <- trajectoryToXYZ(trajectory1, c(lon0, lat0))
-  t2 <- trajectoryToXYZ(trajectory2, c(lon0, lat0))
-  
-  # Flat Earth approximation of aircraft position and velocity
-  ac1XYZ <- t1$position
-  ac2XYZ <- t2$position
-  
-  # Convert bearing/speed to velocity vector.
-  ac1Velocity <- t1$velocity
-  ac2Velocity <- t2$velocity
-  
-  # Distance between aircraft
-  dXYZ <- ac2XYZ - ac1XYZ
-  dXYZ[, 3] <- abs(dXYZ[, 3])
-  relativeVelocity <- ac2Velocity - ac1Velocity
-  
-  # Calculate the range
-  R <- sqrt(apply(dXYZ[, 1:2, drop = FALSE]^2, 1, sum))
-  
-  # Note: the code below here is very close to a direct translation of the 
-  # MATLAB script to R (with a few modifications to permit parallelization). 
-  # Additional optimizations are possible.
-  
   # DAA Well Clear thresholds
   DMOD       <- 4000 # ft
   DH_thr     <- 450  # ft
   TauMod_thr <- 35   # s
   
-  dX <- dXYZ[, 1]
-  dY <- dXYZ[, 2]
-  dH <- dXYZ[, 3]
+  if (!is.flattrajectory(trajectory1)) {
+    lon0 <- mean(c(trajectory1$longitude, trajectory2$longitude))
+    lat0 <- mean(c(trajectory1$latitude, trajectory2$latitude))
+    
+    trajectory1 <- trajectoryToXYZ(trajectory1, c(lon0, lat0))
+    trajectory2 <- trajectoryToXYZ(trajectory2, c(lon0, lat0))
+  }
   
-  vrX <- relativeVelocity[, 1]
-  vrY <- relativeVelocity[, 2]
+  # Distance between aircraft
+  dXYZ <- trajectory2$position - trajectory1$position
+  dXYZ[, 3] <- abs(dXYZ[, 3])
+  relativeVelocity <- trajectory2$velocity - trajectory1$velocity
   
+  # Calculate the range
+  R <- sqrt(apply(dXYZ[, 1:2, drop = FALSE]^2, 1, sum))
+  
+  # Time to the closest point of approach (s)
+  tCPA <- calculateTCPA(trajectory1, trajectory2)
+  
+  # Horizontal missed distance
+  HMD <- sqrt((dXYZ[, 1] + relativeVelocity[, 1] * tCPA)^2 + 
+                (dXYZ[, 2] + relativeVelocity[, 2] * tCPA)^2 )
+  
+  # Note: the code below here is very close to a direct translation of the 
+  # MATLAB script to R (with a few modifications to permit parallelization). 
+  # Additional optimizations are possible.
+
   # Horizontal size of the Hazard Zone (TauMod_thr boundary)
-  Rdot <- (dX * vrX + dY * vrY) / R;
+  Rdot <- apply(dXYZ[, 1:2, drop = FALSE] * relativeVelocity, 1, sum) / R
   S <- pmax(DMOD, .5 * (sqrt( (Rdot * TauMod_thr)^2 + 4 * DMOD^2) - Rdot * TauMod_thr))
   # Safeguard against x/0
   S[R < 1e-4] <- DMOD
-  
-  # Calculate time to CPA and projected HMD
-  tCPA <- -(dX * vrX + dY * vrY) / (vrX^2 + vrY^2)
-  # Safegaurd against singularity
-  tCPA[(vrX^2 + vrY^2) == 0 | (dX * vrX + dY * vrY) > 0] <- 0
-  
-  HMD <- sqrt( (dX + vrX * tCPA)^2 + (dY + vrY * tCPA)^2 )
-  
+
   # Three penetration components (Range, HMD, vertical separation)
-  RangePen <- pmin( ( R  / S)      , 1)
-  HMDPen   <- pmin( (HMD / DMOD)   , 1)
-  DHPen    <- pmin( (dH  / DH_thr) , 1)
-  
+  RangePen <- pmin((R / S), 1)
+  HMDPen   <- pmin((HMD / DMOD), 1)
+  DHPen    <- pmin((dXYZ[, 3] / DH_thr), 1)
+
   hpen <- FGnorm(RangePen, HMDPen)
   vSLoWC <- 100 * (1 - FGnorm(hpen, DHPen))
-  
+
   return(vSLoWC)
 }
 
