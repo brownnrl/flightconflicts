@@ -2,7 +2,7 @@
 % Please edit documentation in R/calculateTCPA.R
 \name{calculateTCPA}
 \alias{calculateTCPA}
-\title{Calculate the time to closest point of approach (tCPA) between two aircraft
+\title{Calculate the time to closest point of approach (TCPA) between two aircraft 
 at each time point of their their trajectories.}
 \usage{
 calculateTCPA(trajectory1, trajectory2)
@@ -15,14 +15,15 @@ first aircraft.}
 second aircraft.}
 }
 \value{
-The numeric vector giving the tCPA. Values in seconds.
+The numeric vector giving the TCPA. Values in seconds.
 }
 \description{
-Calculate the time to closest point of approach (tCPA) between two aircraft
+Calculate the time to closest point of approach (TCPA) between two aircraft 
 at each time point of their their trajectories.
 }
 \details{
 This code is based on the SLoWC formulation by Ethan Pratt and Jacob
-  Kay as implemented in a MATLAB script by Ethan Pratt dated 2016-04-18.
+  Kay as implemented in a MATLAB script by Ethan Pratt dated 2016-04-18. This
+  code calculates horizontal CPA only.
 }
 

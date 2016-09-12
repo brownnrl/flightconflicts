@@ -1,14 +1,15 @@
-#' Calculate the time to closest point of approach (tCPA) between two aircraft
+#' Calculate the time to closest point of approach (TCPA) between two aircraft 
 #' at each time point of their their trajectories.
 #' 
 #' @param trajectory1 A \code{flighttrajectory} object corresponding to the 
 #'   first aircraft.
 #' @param trajectory2 A \code{flighttrajectory} object corresponding to the 
 #'   second aircraft.
-#' @return The numeric vector giving the tCPA. Values in seconds.
+#' @return The numeric vector giving the TCPA. Values in seconds.
 #'   
 #' @details This code is based on the SLoWC formulation by Ethan Pratt and Jacob
-#'   Kay as implemented in a MATLAB script by Ethan Pratt dated 2016-04-18.
+#'   Kay as implemented in a MATLAB script by Ethan Pratt dated 2016-04-18. This
+#'   code calculates horizontal CPA only.
 #'   
 #' @export
 calculateTCPA <- function(trajectory1, trajectory2) {
@@ -41,35 +42,12 @@ calculateTCPA <- function(trajectory1, trajectory2) {
   dXYZ[, 3] <- abs(dXYZ[, 3])
   relativeVelocity <- ac2Velocity - ac1Velocity
   
-  # Calculate the range
-  R <- sqrt(apply(dXYZ[, 1:2, drop = FALSE]^2, 1, sum))
-  
-  # Note: the code below here is very close to a direct translation of the 
-  # MATLAB script to R (with a few modifications to permit parallelization). 
-  # Additional optimizations are possible.
-  
-  # DAA Well Clear thresholds
-  DMOD       <- 4000 # ft
-  DH_thr     <- 450  # ft
-  TauMod_thr <- 35   # s
-  
-  dX <- dXYZ[, 1]
-  dY <- dXYZ[, 2]
-  dH <- dXYZ[, 3]
-  
-  vrX <- relativeVelocity[, 1]
-  vrY <- relativeVelocity[, 2]
-  
-  # Horizontal size of the Hazard Zone (TauMod_thr boundary)
-  Rdot <- (dX * vrX + dY * vrY) / R;
-  S <- pmax(DMOD, .5 * (sqrt( (Rdot * TauMod_thr)^2 + 4 * DMOD^2) - Rdot * TauMod_thr))
-  # Safeguard against x/0
-  S[R < 1e-4] <- DMOD
-  
   # Calculate time to CPA and projected HMD
-  tCPA <- -(dX * vrX + dY * vrY) / (vrX^2 + vrY^2)
+  tCPADividend <- -apply(dXYZ[, 1:2, drop = FALSE] * relativeVelocity, 1, sum)
+  tCPADivisor <- apply(relativeVelocity^2, 1, sum)
+  tCPA <-  tCPADividend / tCPADivisor
   # Safegaurd against singularity
-  tCPA[(vrX^2 + vrY^2) == 0 | (dX * vrX + dY * vrY) > 0] <- 0
+  tCPA[tCPADivisor == 0 | tCPADividend < 0] <- 0
   
   return(tCPA)
 }
