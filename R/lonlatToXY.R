@@ -30,3 +30,22 @@ lonlatToXY <- function(longitude, latitude, originLongitude, originLatitude) {
   
   return(xyFeet)
 }
+
+#' Convert a bearing (in degrees) and velocity (in knots) to north and east 
+#' velocity (in ft / s).
+#' 
+#' @param bearing A numeric vector giving the instantaneous direction of the 
+#'   velocity in degrees.
+#' @param speed A numeric vector giving the instantaneous magnitude of the 
+#'   velocity in knots.
+#' @return A n x 2 matrix giving the north/south and east/west components of the
+#'   velocity, in feet/s.
+bearingToXY <- function(bearing, speed) {
+  # Velocity should be in knots. Convert to ft / s
+  fps <- speed * 1.68781
+  # Bearing should be degrees from north. Convert to radians.
+  theta <- bearing * pi / 180
+  # Return x and y components of the velocity in ft / s
+  return(cbind(fps * sin(theta),
+               fps * cos(theta)))
+}

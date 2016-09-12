@@ -35,6 +35,7 @@ calculateSLoWC <- function(trajectory1, trajectory2) {
                              lon0, lat0),
                   trajectory2$altitude)
   
+  # Convert bearing/speed to velocity vector.
   ac1Velocity <- bearingToXY(trajectory1$bearing, trajectory1$groundspeed)
   ac2Velocity <- bearingToXY(trajectory2$bearing, trajectory2$groundspeed)
   
@@ -83,18 +84,6 @@ calculateSLoWC <- function(trajectory1, trajectory2) {
   vSLoWC <- 100 * (1 - FGnorm(hpen, DHPen))
   
   return(vSLoWC)
-}
-
-# Convert a bearing (in degrees) and velocity (in knots) to north and east 
-# velocity (in ft / s).
-bearingToXY <- function(bearing, velocity) {
-  # Velocity should be in knots. Convert to ft / s
-  fps <- velocity * 1.68781
-  # Bearing should be degrees from north. Convert to radians.
-  theta <- bearing * pi / 180
-  # Return x and y components of the velocity in ft / s
-  return(cbind(fps * sin(theta),
-               fps * cos(theta)))
 }
 
 # The Fernandez-Gausti squircular operator.
