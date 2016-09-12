@@ -15,12 +15,7 @@
 #'   
 #' @export
 calculateSLoWC <- function(trajectory1, trajectory2) {
-  if (!is.flighttrajectory(trajectory1) || !is.flighttrajectory(trajectory2)) {
-    stop("Both arguments must be instances of flighttrajectory")
-  }
-  if (!isTRUE(all.equal(trajectory1$timestamp, trajectory2$timestamp))) {
-    stop("Trajectories must have matching time stamps")
-  }
+  checkTrajectories(trajectory1, trajectory2)
   
   # Find the "origin" lon/lat for the encounter. Distances will be represented
   # in feet north/east from this point. Use the centroid of the trajectories.
