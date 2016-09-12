@@ -22,17 +22,16 @@ calculateSLoWC <- function(trajectory1, trajectory2) {
   lon0 <- mean(c(trajectory1$longitude, trajectory2$longitude))
   lat0 <- mean(c(trajectory1$latitude, trajectory2$latitude))
   
+  t1 <- trajectoryToXYZ(trajectory1, c(lon0, lat0))
+  t2 <- trajectoryToXYZ(trajectory2, c(lon0, lat0))
+  
   # Flat Earth approximation of aircraft position and velocity
-  ac1XYZ <- cbind(lonlatToXY(trajectory1$longitude, trajectory1$latitude, 
-                             lon0, lat0),
-                  trajectory1$altitude)
-  ac2XYZ <- cbind(lonlatToXY(trajectory2$longitude, trajectory2$latitude, 
-                             lon0, lat0),
-                  trajectory2$altitude)
+  ac1XYZ <- t1$position
+  ac2XYZ <- t2$position
   
   # Convert bearing/speed to velocity vector.
-  ac1Velocity <- bearingToXY(trajectory1$bearing, trajectory1$groundspeed)
-  ac2Velocity <- bearingToXY(trajectory2$bearing, trajectory2$groundspeed)
+  ac1Velocity <- t1$velocity
+  ac2Velocity <- t2$velocity
   
   # Distance between aircraft
   dXYZ <- ac2XYZ - ac1XYZ
