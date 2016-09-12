@@ -39,12 +39,13 @@ calculateSLoWC <- function(trajectory1, trajectory2) {
   ac1Velocity <- bearingToXY(trajectory1$bearing, trajectory1$groundspeed)
   ac2Velocity <- bearingToXY(trajectory2$bearing, trajectory2$groundspeed)
   
+  # Distance between aircraft
   dXYZ <- ac2XYZ - ac1XYZ
   dXYZ[, 3] <- abs(dXYZ[, 3])
   relativeVelocity <- ac2Velocity - ac1Velocity
   
   # Calculate the range
-  R <- sqrt(apply(dXYZ[, 1:2]^2, 1, sum))
+  R <- sqrt(apply(dXYZ[, 1:2, drop = FALSE]^2, 1, sum))
   
   # Note: the code below here is very close to a direct translation of the 
   # MATLAB script to R (with a few modifications to permit parallelization). 
