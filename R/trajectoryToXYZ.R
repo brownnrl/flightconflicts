@@ -5,7 +5,7 @@
 #'   conversion.
 #' @return A flattrajectory object.
 trajectoryToXYZ <- function(trajectory, origin) {
-  if (!is.flighttrajectory(trajectory)) {
+  if (!flightpathr::is.flighttrajectory(trajectory)) {
     stop("'trajectory' must be an instance of flighttrajectory")
   }
   if (!is.numeric(origin) || length(origin) != 2) {

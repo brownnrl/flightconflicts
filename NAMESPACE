@@ -2,9 +2,6 @@
 
 export(calculateSLoWC)
 export(calculateTCPA)
-export(createTrajectory)
 export(identifyLoWC)
 export(identifyNMAC)
-export(interpolateTrajectory)
 export(is.flattrajectory)
-export(is.flighttrajectory)

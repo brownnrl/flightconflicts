@@ -2,6 +2,7 @@ library(flightconflicts)
 context("calculateTCPA")
 
 library(geosphere)
+library(flightpathr)
 
 kacy <- c(-74.5771667, 39.4575833)
 kphl <- c(-75.2408658, 39.8722494)

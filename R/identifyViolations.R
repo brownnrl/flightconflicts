@@ -13,7 +13,8 @@
 #'   
 #' @export
 identifyNMAC <- function(trajectory1, trajectory2) {
-  if (!is.flighttrajectory(trajectory1) || !is.flighttrajectory(trajectory2)) {
+  if (!flightpathr::is.flighttrajectory(trajectory1) || 
+      !flightpathr::is.flighttrajectory(trajectory2)) {
     stop("Both arguments must be instances of flighttrajectory")
   }
   if (!isTRUE(all.equal(trajectory1$timestamp, trajectory2$timestamp))) {

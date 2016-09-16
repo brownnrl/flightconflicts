@@ -2,6 +2,7 @@ library(flightconflicts)
 context("calculateSLoWC")
 
 library(geosphere)
+library(flightpathr)
 
 # I'll attempt to replicate the values in Appendix A of SC-228.
 

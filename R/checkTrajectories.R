@@ -10,8 +10,8 @@
 #'   of samples and origin.
 checkTrajectories <- function(trajectory1, trajectory2) {
   # Two flight trajectories
-  if (is.flighttrajectory(trajectory1)) {
-    if (!is.flighttrajectory(trajectory2)) {
+  if (flightpathr::is.flighttrajectory(trajectory1)) {
+    if (!flightpathr::is.flighttrajectory(trajectory2)) {
       stop("'trajectory1' is a flighttrajectory; 'trajectory2' must match this type")
     }
     if (!isTRUE(all.equal(trajectory1$timestamp, trajectory2$timestamp))) {
