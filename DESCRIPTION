@@ -1,7 +1,7 @@
 Package: flightconflicts
 Title: Analyze Conflicts Between Aircraft
 Version: 0.0.0.9000
-Authors@R: person("Eamon", "Caddigan", email = "eamon.caddigan@tgobrien.com", 
+Authors@R: person("Eamon", "Caddigan", email = "eamon.caddigan@dsoft-tech.com", 
                   role = c("aut", "cre"))
 Description: This package contains tools to analyze aircraft trajectories and
     identify loss of well-clear (LoWC) and near mid-air collisions (NMAC).
@@ -10,6 +10,6 @@ Depends:
 License: MIT
 LazyData: true
 RoxygenNote: 5.0.1
-Imports: geosphere
-Suggests: flightpathr,
-    testthat
+Imports: flightpathr,
+    geosphere
+Suggests: testthat
